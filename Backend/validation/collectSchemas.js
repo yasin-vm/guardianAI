@@ -6,18 +6,25 @@ const notificationEntry = z.object({ app: z.string().optional(), title: z.string
 const imageEntry = z.object({ uri: z.string().optional(), detectedObjects: z.record(z.any()).optional(), capturedAt: z.string().optional(), meta: z.record(z.any()).optional() });
 const browserEntry = z.object({ url: z.string().url(), title: z.string().optional(), visitedAt: z.string().optional(), meta: z.record(z.any()).optional() });
 
-export const collectSchema = z.object({
-  type: z.enum(['screen_time', 'app_usage', 'notification', 'image', 'browser_activity']),
-  payload: z.union([
-    z.array(screenTimeEntry),
-    z.array(appUsageEntry),
-    z.array(notificationEntry),
-    z.array(imageEntry),
-    z.array(browserEntry),
-    screenTimeEntry,
-    appUsageEntry,
-    notificationEntry,
-    imageEntry,
-    browserEntry,
-  ]),
-});
+export const collectSchema = z.discriminatedUnion('type', [
+  z.object({
+    type: z.literal('screen_time'),
+    payload: z.union([z.array(screenTimeEntry), screenTimeEntry]),
+  }),
+  z.object({
+    type: z.literal('app_usage'),
+    payload: z.union([z.array(appUsageEntry), appUsageEntry]),
+  }),
+  z.object({
+    type: z.literal('notification'),
+    payload: z.union([z.array(notificationEntry), notificationEntry]),
+  }),
+  z.object({
+    type: z.literal('image'),
+    payload: z.union([z.array(imageEntry), imageEntry]),
+  }),
+  z.object({
+    type: z.literal('browser_activity'),
+    payload: z.union([z.array(browserEntry), browserEntry]),
+  }),
+]);

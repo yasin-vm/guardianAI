@@ -10,9 +10,9 @@ const screenTimeSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+screenTimeSchema.index({ userId: 1 });
+screenTimeSchema.index({ date: -1 });
+
 const ScreenTime = mongoose.model('ScreenTime', screenTimeSchema);
 
 export default ScreenTime;
-
-screenTimeSchema.index({ userId: 1 });
-screenTimeSchema.index({ date: -1 });

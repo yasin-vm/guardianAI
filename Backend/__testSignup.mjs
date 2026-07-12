@@ -1,4 +1,4 @@
-import fetch from 'node:fetch';
+// import fetch from 'node:fetch';
 const random = Math.random().toString(36).slice(2, 8);
 const parentEmail = `testparent_${random}@example.com`;
 const badChildEmail = `badchild_${random}@example.com`;

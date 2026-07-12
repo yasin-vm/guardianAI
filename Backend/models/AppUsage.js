@@ -13,9 +13,9 @@ const appUsageSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+appUsageSchema.index({ userId: 1 });
+appUsageSchema.index({ startTime: -1 });
+
 const AppUsage = mongoose.model('AppUsage', appUsageSchema);
 
 export default AppUsage;
-
-appUsageSchema.index({ userId: 1 });
-appUsageSchema.index({ startTime: -1 });
